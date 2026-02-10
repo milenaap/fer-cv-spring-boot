@@ -7,9 +7,23 @@
 </head>
 <body>
     <h1>Nuestras Habilidades</h1>
+    <form action="/skills" method="get">
+        <label th:for="name">Buscar</label>
+        <input type="text" th:value="${filter}" name="filter">
+        <button type="submit">Buscar</button>
+    </form>
+
+
     <p th:if="${skills.isEmpty()}">No hay datos</p>
+
+
     <ul th:if="${!skills.isEmpty()}">
-        <li th:each="skill : ${skills}" th:text="${skill}" >Skill</li>
+        <li th:each="skill : ${skills}" >
+            <a href="#" th:text="${skill.name}"></a> -
+            <span th:text="${skill.level}"></span>
+        </li>
     </ul>
+
+
 </body>
 </html>
