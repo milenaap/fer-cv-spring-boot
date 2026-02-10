@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Nuestras Habilidades</h1>
+    <p th:if="${skills.isEmpty()}">No hay datos</p>
+    <ul th:if="${!skills.isEmpty()}">
+        <li th:each="skill : ${skills}" th:text="${skill}" >Skill</li>
+    </ul>
+</body>
+</html>
