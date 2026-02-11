@@ -31,3 +31,11 @@
   
 ```
 
+# Comando para ejecutar servidor de spring 
+
+```sh
+
+./mvnw spring-boot:run
+
+```
+

@@ -1,0 +1,44 @@
+<div class="flex flex-row gap-2 mb-5 mt-5 items-center justify-between">
+  <div>
+    <form action="/skills" method="get">
+      <label th:for="name">Buscar</label>
+      <input type="text" th:value="${filter}" name="filter" />
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        type="submit"
+      >
+        Buscar
+      </button>
+    </form>
+  </div>
+
+  <div>
+    <a
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      href="/skills/create"
+    >
+      Agregar nueva skill
+    </a>
+  </div>
+</div>
+
+<p th:if="${skills.isEmpty()}">No hay datos</p>
+
+<ul th:if="${!skills.isEmpty()}">
+  <li th:each="skill, stat : ${skills}">
+    <a
+      th:href="@{'/skills/id/' + ${stat.index}}"
+      th:text="${skill.name}"
+      class="text-blue-600 hover:text-blue-800"
+    ></a>
+    -
+    <span th:text="${skill.level}"></span>
+
+    <span th:text="${stat.count}"></span>
+    <span th:text="${stat.size}"></span>
+    <span th:if="${stat.first}">(Primera)</span>
+    <span th:if="${stat.last}">(Ultima)</span>
+    <span th:if="${stat.even}">[Par]</span>
+    <span th:if="${stat.odd}">[Impar]</span>
+  </li>
+</ul>

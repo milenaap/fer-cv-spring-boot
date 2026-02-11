@@ -1,12 +1,18 @@
 package com.devtalles.tu_cv_sping_boot.cv.controller;
 
-import com.devtalles.tu_cv_sping_boot.cv.model.Skill;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.devtalles.tu_cv_sping_boot.cv.model.Skill;
 
 
 
@@ -16,13 +22,15 @@ import java.util.List;
 public class SkillsController {
 
 //    private final List<Skill> skills = new ArrayList<>();
-    private final List<Skill> skills = List.of(
-         new Skill("Java", "Avanzado"),
-         new Skill("JS", "Medio"),
-         new Skill("CSS", "Avanzado"),
-         new Skill("Python", "Basico"),
-         new Skill("PHP", "Medio")
-        );
+    private final List<Skill> skills = new ArrayList<>(List.of(
+        new Skill("Java", "Avanzado"),
+        new Skill("JS", "Medio"),
+        new Skill("CSS", "Avanzado"),
+        new Skill("Python", "Basico"),
+        new Skill("PHP", "Medio")
+    )
+
+);
 
     @GetMapping
     public String index(@RequestParam(defaultValue = "", required = false) String filter, Model model){
@@ -31,22 +39,33 @@ public class SkillsController {
                         .toList();
         model.addAttribute("skills", filteredSkills);
         model.addAttribute("filter", filter);
-        return "skills";
+
+        model.addAttribute("title", "Habilidades"); // Carga el título
+        model.addAttribute("content", "skills/index"); // Carga la vista
+        // Retorna la plantilla
+        return "layouts/main";
+        // return "skills";
     }
 
-    @GetMapping("/{index}")
+    @GetMapping("/id/{index}")
     public String show(@PathVariable int index, Model model){
         if (index>= 0 && index < skills.size()) {
             Skill skill = skills.get(index);
             model.addAttribute("skill", skill);
-            return "show-skill";
+
+             // Agrega el tituto y el contenido
+            model.addAttribute("title", "Show Skill");
+            model.addAttribute("content", "skills/show");
+            // Retorna la plantilla
+            return "layouts/main";
+            // return "show-skill";
         }
 
         return "redirect:/skills";
 
     }
 
-    @GetMapping("/{name}/{level}")
+    @GetMapping("/filter/{name}/{level}")
     public String showFilteredSkill(
             @PathVariable String name,
             @PathVariable String level,
@@ -54,13 +73,30 @@ public class SkillsController {
     ){
 
         List<Skill> filteredSkills = skills.stream()
-                .filter(skill-> skill.getName().toLowerCase().equalsIgnoreCase(name)
+                .filter(skill-> skill.getName().equalsIgnoreCase(name)
                 && skill.getLevel().equalsIgnoreCase(level)
                 )
                 .toList();
         model.addAttribute("skills", filteredSkills);
         model.addAttribute("filterMessage", "Filtro: " + name + " - " + level);
-        return "/skills";
+        return "skills/index";
+
+    }
+
+
+    @GetMapping("/name/{name}")
+    public String showFilteredSkill(
+            @PathVariable String name,
+            Model model
+    ){
+
+        List<Skill> filteredSkills = skills.stream()
+                .filter(skill-> skill.getName().equalsIgnoreCase(name)
+                )
+                .toList();
+        model.addAttribute("skills", filteredSkills);
+        model.addAttribute("filterMessage", "Filtro: " + name);
+        return "skills/index";
 
     }
 
@@ -68,7 +104,12 @@ public class SkillsController {
     @GetMapping("/create")
     public String create(Model model){
         model.addAttribute("skill", new Skill());
-        return "create-skill";
+         // Agrega el tituto y el contenido
+            model.addAttribute("title", "Create Skill");
+            model.addAttribute("content", "skills/create");
+            // Retorna la plantilla
+            return "layouts/main";
+        // return "create-skill";
     }
 
     @PostMapping("/store")
@@ -76,4 +117,6 @@ public class SkillsController {
         skills.add(skill);
         return "redirect:/skills";
     }
+
+    
 }
