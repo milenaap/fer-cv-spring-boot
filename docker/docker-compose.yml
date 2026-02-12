@@ -1,0 +1,18 @@
+## docker compose up -d
+name: my-portfolio-backend
+services:
+  postgres:
+    image: postgres:16
+    container_name: myportfolio-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: myportfolio
+      POSTGRES_USER: myportfolio
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
