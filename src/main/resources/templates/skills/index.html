@@ -22,6 +22,7 @@
   </div>
 </div>
 
+<p th:if="${filterMessage}" th:text="${filterMessage}"></p>
 <p th:if="${skills.isEmpty()}">No hay datos</p>
 
 <ul th:if="${!skills.isEmpty()}">

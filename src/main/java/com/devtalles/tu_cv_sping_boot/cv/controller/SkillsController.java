@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.devtalles.tu_cv_sping_boot.cv.model.Skill;
 
@@ -79,25 +80,56 @@ public class SkillsController {
                 .toList();
         model.addAttribute("skills", filteredSkills);
         model.addAttribute("filterMessage", "Filtro: " + name + " - " + level);
-        return "skills/index";
+      
+        model.addAttribute("title", "Habildades");
+        model.addAttribute("content", "skills/index");
+        // Retorna la plantilla
+        return "layouts/main";
 
     }
 
 
-    @GetMapping("/name/{name}")
+    // @GetMapping("/name/{name}")
+    // public String showFilteredSkill(
+    //         @PathVariable String name,
+    //         Model model
+    // ){
+    //     List<Skill> filteredSkills = skills.stream()
+    //             .filter(skill-> skill.getName().equalsIgnoreCase(name))
+    //             .toList();
+
+    //     if(filteredSkills.isEmpty()){
+    //         model.addAttribute("filterMessage", "No se encontraron registros para: " + name);
+    //         return "forward:/skills";
+    //     }
+
+    //     model.addAttribute("skills", filteredSkills);
+    //     model.addAttribute("filterMessage", "Filtro: " + name);
+
+    //     model.addAttribute("title", "Habilidades");
+    //     model.addAttribute("content", "skills/index");
+    //     // Retorna la plantilla
+    //     return "layouts/main";
+    // }
+
+      @GetMapping("/name/{name}")
     public String showFilteredSkill(
             @PathVariable String name,
-            Model model
+            RedirectAttributes redirectAttributes
     ){
-
         List<Skill> filteredSkills = skills.stream()
-                .filter(skill-> skill.getName().equalsIgnoreCase(name)
-                )
+                .filter(skill-> skill.getName().equalsIgnoreCase(name))
                 .toList();
-        model.addAttribute("skills", filteredSkills);
-        model.addAttribute("filterMessage", "Filtro: " + name);
-        return "skills/index";
 
+        if(filteredSkills.isEmpty()){
+            redirectAttributes.addFlashAttribute("filterMessage", "No se encontraron registros para: " + name);
+            return "redirect:/skills?filter=" + name;
+        }
+
+        redirectAttributes.addFlashAttribute("skills", filteredSkills);
+        redirectAttributes.addFlashAttribute("filterMessage", "Filtro: " + name);
+        
+        return "redirect:/skills?filter=" + name;
     }
 
 

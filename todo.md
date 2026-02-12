@@ -31,11 +31,16 @@
   
 ```
 
-# Comando para ejecutar servidor de spring 
+# Comandos
 
 ```sh
 
-./mvnw spring-boot:run
+./mvnw spring-boot:run                                  // para ejecutar servidor de spring 
+
+
+./mvnw clean package                                    // compila el proyecto y crea el .jar
+
+java -jar target/tu-cv-spring-boot-0.0.1-SNAPSHOT.jar   // Ejecutar el .jar 
 
 ```
 
