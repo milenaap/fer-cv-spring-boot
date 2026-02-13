@@ -17,7 +17,7 @@ public class PersonalInfo {
     private Integer yearsOfExperience;
     private String email;
     private String phone;
-    private String linkendinUrl;
+    private String linkedinUrl;
     private String githubUrl;
 
 }
