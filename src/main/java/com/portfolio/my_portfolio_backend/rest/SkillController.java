@@ -1,0 +1,57 @@
+package com.portfolio.my_portfolio_backend.rest;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.portfolio.my_portfolio_backend.models.Skill;
+import com.portfolio.my_portfolio_backend.service.ISkillService;
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/v1/skills")
+@RequiredArgsConstructor
+public class SkillController {
+
+    private final ISkillService skillService;
+    
+
+    @GetMapping
+    public List<Skill> findAll() {
+        return skillService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Skill> findById(@PathVariable Long id) {
+        return skillService.findById(id);
+    }
+    @GetMapping("/personal-info/{id}")
+    public List<Skill> findSkillsByPersonalInfoId(@PathVariable("id") Long personalInfoId){
+        return skillService.findByPersonalInfoId(personalInfoId);
+    }
+
+    @PostMapping
+    public Skill save(@RequestBody Skill skill) {
+        return skillService.save(skill);
+    }
+
+    @PutMapping("/{id}")
+    public Skill update(@PathVariable Long id, @RequestBody Skill skill) {
+        skill.setId(id);
+        return skillService.save(skill);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
+        skillService.deleteById(id);
+    }
+}

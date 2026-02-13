@@ -5,13 +5,13 @@
 ```sh
 
 /**
-* index -> listar
-* show -> ver uno
-* create -> carga view para crear
-* store -> guardar
-* edit -> carga view para editar
-* update -> actualizar
-* destroy -> eliminar
+* findAll ->    index     -> listar
+* findById ->   show      -> ver uno
+* create ->     carga view para crear
+* save ->       store     -> guardar
+* edit ->       carga view para editar
+* save ->       update    ->actualizar
+* deleteById->  destroy   ->eliminar
   */
   
 ```
@@ -22,11 +22,11 @@
 ```sh
 
 /**
-* index -> listar
-* show -> ver uno
-* store -> guardar
-* update -> actualizar
-* destroy -> eliminar
+* findAll ->    index     -> listar
+* findById ->   show      -> ver uno
+* save ->       store     -> guardar
+* save ->       update    -> actualizar
+* deleteById->  destroy   ->eliminar
   */
   
 ```
